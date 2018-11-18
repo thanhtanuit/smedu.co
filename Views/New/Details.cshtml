@@ -1,0 +1,75 @@
+﻿@model Bidc_Union_Management.Models.New
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Tin tức</a>
+            </li>
+            <li class="active-bre"><a href="#">Chi tiết</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Chi tiết tin tức</h4>
+                    </div>
+                    <div class="tab-inn">
+                        <form>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Tên:</strong><br />
+                                        @Model.Name
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ngày tạo:</strong><br />
+                                        @Model.CreateDate
+                                    </div>
+                                </div>
+                                 <div class="input-field col s12">                                        
+                                        <div class="col-md-10">
+                                            <strong>Mô Tả:</strong><br />
+                                            @Model.Description
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field col s12">                                       
+                                        <div class="col-md-10">
+                                            <strong>Nội Dung:</strong><br />
+                                            @Html.TextAreaFor(model => model.ContentNew, new { @id = "ckeContent" })
+                                            @Html.ValidationMessageFor(model => model.ContentNew)
+                                            <script type="text/javascript">
+                                                CKEDITOR.replace("ckeContent");
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <div class="col-md-10">
+                                           <strong>Ảnh đại diện:</strong><br /><br />
+                                            <img width="200" src="@Url.Content("/FileUpload")/@Html.DisplayFor(model => model.ImagesNew)">
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="input-field col s12">
+                                        <div class="col-md-10">
+                                            @Html.ActionLink("Quay Lại", "Index", "News", new { @class = "waves-light btn-large" })
+                                            @Html.ActionLink("Sửa", "Edit", new { id = Model.Id }, new { @class = "waves-light btn-large" })
+                                        </div>
+                                    </div> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

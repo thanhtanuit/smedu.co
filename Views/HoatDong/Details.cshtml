@@ -1,0 +1,513 @@
+﻿@model Bidc_Union_Management.Models.HoatDong
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Hoạt động</a>
+            </li>
+            <li class="active-bre"><a href="#">Chi tiết</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Chi tiết Hoạt động</h4>
+                    </div>
+                    <div class="tab-inn">
+                        <form action="javascript:void(0)">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Tên:</strong><br />
+                                        @Model.Name
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ngày tạo:</strong><br />
+                                        @Model.CreateDate
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Mô Tả:</strong><br />
+                                        @Model.Description
+                                    </div>
+                                </div>
+
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Nội Dung:</strong><br />
+                                        @Html.Raw(Model.Detail)
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-12">
+                                        <div class="tab-inn tab-posi" style="padding-left: 0px;">
+                                            <ul class="tabs" style="overflow: hidden">
+                                                <li class="tab col s3"><a class="active" href="#Comments">Comments</a>
+                                                </li>
+                                                <li class="tab col s3"><a href="#Attachments">Attachments</a>
+                                                </li>
+                                                <li class="tab col s3"><a href="#History">History</a>
+                                                </li>
+                                                <li class="tab col s3"><a href="#Notification">Tham gia</a>
+                                                </li>
+                                            </ul>
+                                            <hr style="margin-bottom: 0px; padding-bottom: 0px;" />
+                                            <div id="Comments" class="col s12 tab-pad">
+                                                <div class="tab-inn list-act-hom" style="padding-left: 0px;" id="listcomment">
+                                                    <ul>
+                                                        @foreach (var item in ViewBag.dscomment)
+                                                        {
+                                                            DateTime dt = (DateTime)item.CreateDate;
+                                                            <li class="list-act-hom-con">
+                                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                                <h4><span>@dt.ToString("dd/MM/yyyy HH:mm") </span>@item.UserName</h4>
+                                                                @Html.Raw(item.Detail)
+                                                            </li>                                                        
+                                                        }
+                                                    </ul>
+                                                </div>
+                                                @if (ViewBag.allow == "1")
+                                                {                                                
+                                                    <textarea rows="15" style="padding: 5px; height: 100px;" id="ckeContent">
+                                                        </textarea>
+                                                    <script type="text/javascript">
+                                                        CKEDITOR.replace("ckeContent");
+                                                    </script>
+                                                    <br />
+                                                    <button class="waves-light btn-large" onclick="addcomment()" style="margin-top: 15px;">Add Comment</button>
+                                                }
+                                            </div>
+                                            <div id="Attachments" class="col s12 tab-pad">
+                                                <div id="listattachments">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>File Name</th>
+                                                                <th>Size</th>
+                                                                <th>Creator</th>
+                                                                <th>Created</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var item in ViewBag.dsattachment)
+                                                            {
+                                                                DateTime dt = (DateTime)item.CreateDate;
+                                                                <tr>
+                                                                    <td><a href="/FileUpload/Attachments/@item.Link" target="_blank" >@item.Description</a></td>
+                                                                    <td>@item.Size</td>
+                                                                    <td>@item.UserName</td>
+                                                                    <td>@dt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @if (ViewBag.allow == "1")
+                                                { 
+                                                    <div class="box-inn-sp box-second-inn" style="box-shadow: none">
+                                                        <div class="inn-title">
+                                                            <h4>Đính kèm file</h4>
+                                                        </div>
+                                                        <form action="#">
+                                                            <div class="input-field col s12" style="clear: both; padding-top: 10px;">
+                                                                <p style="padding-left: 20px;">Chọn file</p>
+                                                                <div class="col-sm-9">
+                                                                    <input type="file" name="selectfile" id="selectfile" multiple />
+                                                                </div>
+                                                            </div>
+                                                            <div class="input-field col s12">
+                                                                <div class="col-md-10">
+                                                                    <strong>Mô tả:<br />
+                                                                    </strong>
+                                                                    <input type="text" class="validate" name="namefile" id="namefile" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="input-field col s12">
+                                                                <div class="col-md-10">
+                                                                    <button class="waves-light btn-large" id="btnUpload" style="margin-top: 15px;">Add File</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div id="History" class="col s12 tab-pad">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Ngày</th>
+                                                            <th>User</th>
+                                                            <th>Mô tả</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in ViewBag.dshistory)
+                                                        {
+                                                            DateTime dt = (DateTime)item.CreateDate;
+                                                            <tr>
+                                                                <td>@dt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                                <td>@item.UserName</td>
+                                                                <td>@item.ItemChanged</td>
+                                                            </tr> 
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="Notification" class="col s12 tab-pad">
+                                                <div id="listnotification">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            @foreach (var item in ViewBag.DoanVienThamGia)
+                                                            {
+                                                                <tr>                                                                   
+                                                                    <td>@item.FullName</td>
+                                                                </tr>                                                       
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                @if (ViewBag.allow == "1")
+                                                {
+                                                    <div class="box-inn-sp box-second-inn">                                                  
+                                                        <form action="javascript:void(0)">
+                                                            <div class="input-field col s12">
+                                                                <div class="col-md-5">
+                                                                    <div class="list-group">
+                                                                        @foreach (var item in ViewBag.dschuathamgia)
+                                                                        {                                                                  
+                                                                          <a href="Javascript:void(0)" gt="@item.UserName" class="add-item list-group-item list-group-item-action">
+                                                                            @item.UserName
+                                                                          </a>                                                                                
+                                                                        }                                                               
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button class="bt_add waves-light btn-large">Thêm >></button> <br /><br />
+                                                                    <button class="bt_remove waves-light btn-large"><< Xóa</button>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <div class="list-group list-remove">                                                                 
+                                                                       @foreach (var item in ViewBag.dsthamgia)
+                                                                        {                                                                  
+                                                                          <a href="Javascript:void(0)" gt="@item.UserName" class="remove-item list-group-item list-group-item-action">
+                                                                            @item.UserName
+                                                                          </a>                                                                                
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#btnUpload').click(function () {
+            var HoatDongId = '@ViewBag.HoatDongId';
+            var Description = $('#namefile').val();
+            // Checking whether FormData is available in browser  
+            if (window.FormData !== undefined) {
+
+                var fileUpload = $("#selectfile").get(0);
+                var files = fileUpload.files;
+
+                // Create FormData object  
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object  
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    url: '/HoatDong/UploadFiles?HoatDongId=' + HoatDongId + '&Description=' + Description,
+                    type: "POST",
+                    contentType: false, // Not to set any content header  
+                    processData: false, // Not to process data  
+                    data: fileData,
+                    success: function (result) {
+                        //alert(result);
+                        Getattachments();
+                        GetHistory();
+                        $("#namefile").val();
+                        document.getElementById("selectfile").value = "";
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+
+        $(".add-item").click(function () {            
+            $(".add-item").removeClass("active");
+            $(this).addClass("active");         
+        }); 
+
+        $(".remove-item").click(function () {
+            $(".remove-item").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $(".bt_add").click(function () {
+            debugger;
+            var HoatDongId = '@ViewBag.HoatDongId';
+            var gt = $(".list-group .active").attr("gt");
+            /*POST*/
+            $.ajax({
+                url: '/HoatDong/AddThamGia',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ objectthamgia: { UserName: gt, HoatDongId: HoatDongId } }),
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    getnotification();
+                    location.href = "/HoatDong/Details/" + HoatDongId + "#Notification";
+                    location.reload(true);
+
+                },
+                error: function (xhr) {
+                    //alert('error');
+                }
+            });
+        });
+
+        //---------- Begin Remove ------------------------
+        $(".bt_remove").click(function () {
+            debugger;
+            var HoatDongId = '@ViewBag.HoatDongId';
+            var gt = $(".list-remove .active").attr("gt");
+            /*POST*/
+            $.ajax({
+                url: '/HoatDong/RemoveThamGia',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ objectthamgia: { UserName: gt, HoatDongId: HoatDongId } }),
+                async: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    debugger;
+                    getnotification();
+                    location.href = "/HoatDong/Details/" + HoatDongId + "#Notification";
+                    location.reload(true);
+
+                },
+                error: function (xhr) {
+                    //alert('error');
+                }
+            });
+        });
+    });
+
+    // This is a functions that scrolls to #{blah}link
+    function goToByScroll(id) {
+        // Remove "link" from the ID
+        id = id.replace("link", "");
+        // Scroll
+        $('html,body').animate({
+            scrollTop: $("#" + id).offset().top - 100 + "px"
+            // scrollTop: $("#" + id)
+        }, 'slow');
+    }
+
+
+    function addcomment() {
+        debugger;
+        var value = CKEDITOR.instances['ckeContent'].getData();
+        var HoatDongId = '@ViewBag.HoatDongId';
+        /*POST*/
+        $.ajax({
+            url: '/HoatDong/AddComment',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ objectcomment: { content: value, HoatDongId: HoatDongId } }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                getcomment();
+                GetHistory();
+                CKEDITOR.instances['ckeContent'].setData('')
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function removenotification(Id) {
+        debugger;
+        var HoatDongId = '@ViewBag.HoatDongId';
+
+        /*POST*/
+        $.ajax({
+            url: '/HoatDong/RemoveNotification',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ objectcomment: { content: Id, HoatDongId: HoatDongId } }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                getnotification();
+                location.href = "/HoatDong/Details/" + HoatDongId + "#Notification";
+                location.reload(true);
+
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function getcomment() {
+        debugger;
+        var Id = '@ViewBag.HoatDongId';
+        $.ajax({
+            url: '/HoatDong/GetComment?Id=' + Id,
+            type: "get", // chọn phương thức gửi là get
+            dateType: "text", // dữ liệu trả về dạng text
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                $("#listcomment").html(data);
+                goToByScroll('listcomment');
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function Getattachments() {
+        debugger;
+        var Id = '@ViewBag.HoatDongId';
+        $.ajax({
+            url: '/HoatDong/Getattachments?Id=' + Id,
+            type: "get", // chọn phương thức gửi là get
+            dateType: "text", // dữ liệu trả về dạng text
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                $("#listattachments").html(data);
+                goToByScroll('listattachments');
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function getnotification() {
+        var Id = '@ViewBag.HoatDongId';
+        $.ajax({
+            url: '/HoatDong/GetNotification?Id=' + Id,
+            type: "get", // chọn phương thức gửi là get
+            dateType: "text", // dữ liệu trả về dạng text
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                $("#listnotification").html(data);
+                goToByScroll('listnotification');
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function GetHistory() {
+        var Id = '@ViewBag.HoatDongId';
+        $.ajax({
+            url: '/HoatDong/GetHistory?Id=' + Id,
+            type: "get", // chọn phương thức gửi là get
+            dateType: "text", // dữ liệu trả về dạng text
+            contentType: 'application/json; charset=utf-8',
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                $("#History").html(data);
+                goToByScroll('History');
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+    function themdoanvien() {
+        debugger;
+        var HoatDongId = '@ViewBag.HoatDongId';
+        var doanvienid = $("#doanvienid").val();
+
+        /*POST*/
+        $.ajax({
+            url: '/HoatDong/AddDoanvien',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ objectcomment: { content: doanvienid, HoatDongId: HoatDongId } }),
+            async: true,
+            processData: false,
+            cache: false,
+            success: function (data) {
+                debugger;
+                location.href = "/HoatDong/Details/" + HoatDongId + "#Notification";
+                location.reload(true);
+
+            },
+            error: function (xhr) {
+                //alert('error');
+            }
+        })
+    }
+
+</script>

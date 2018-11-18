@@ -1,0 +1,84 @@
+﻿<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a>
+            </li>
+            <li class="active-bre"><a href="Javascript:void(0)">Hoạt động</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title" style="margin-bottom: 10px;">
+                        <h4>Hoạt động</h4>
+                    </div>
+                    <div style="margin: 5px; margin-left: 25px;">
+                        @foreach (var item in ViewBag.dshoatdong1)
+                        {
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-sm-2">
+                                    <a href="/HoatDong/Details/@item.Id">
+                                        <img class="card-img-top" height="90" width="166" src="/FileUpload/@item.Images"></a>
+                                </div>
+                                <div class="col-sm-10">
+                                    <h5><a href="/HoatDong/Details/@item.Id">@item.Name</a></h5>
+                                    @item.Description
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-sm-12">
+                                <ul class="list-group" style="margin-top: 10px;">
+                                    @foreach (var item in ViewBag.dshoatdong2)
+                                    {                                      
+                                        <li class="list-group-item">
+                                            <img style="position: relative; margin-top: -5px;" width="20" height="20" src="/Images/icon-list.png" />
+                                            <a  target="_blank" href="/HoatDong/Details/@item.Id">@item.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 10px">
+                            <div class="col-sm-12" style="height: 30px;">
+                                <span style="float: right"><a href="/Home/ListHoatDong" class="btn-large" style="margin-bottom: 10px; margin-right: 20px;">Xem thêm</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Công văn</h4>
+                    </div>
+                    <div class="tab-inn" style="margin-top: 10px">
+                        <ul class="list-group">
+                            @foreach (var item in ViewBag.dscongvan)
+                            {
+                                var dt = (DateTime)item.CreateDate;
+                                <li class="list-group-item">
+                                    <img style="position: relative; margin-top: -5px;" width="20" height="20" src="/Images/icon-list.png" />
+                                    <a  target="_blank" href="/FileUpload/CongVan/@item.Link">@item.Name (@dt.ToString("dd/MM/yyyy"))</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div class="col-sm-12" style="height: 30px;">
+                            <span style="float: right"><a href="/Home/ListCongVan" class="btn-large" style="margin-bottom: 10px; margin-right: 20px;">Xem thêm</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

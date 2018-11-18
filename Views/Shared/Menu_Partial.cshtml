@@ -1,0 +1,243 @@
+﻿@{
+    bool rolesadmin = false;
+    bool roloesinputter = false;
+    bool rolesauthorise = false;
+    bool rolesview = false;
+    if (Roles.IsUserInRole("Admin"))
+    {
+        rolesadmin = true;
+    }
+    if (Roles.IsUserInRole("Inputter"))
+    {
+        roloesinputter = true;
+
+    }
+    if (Roles.IsUserInRole("Authoriser"))
+    {
+        rolesauthorise = true;
+    }
+    if (Roles.IsUserInRole("Viewer"))
+    {
+        rolesview = true;
+    }
+}
+<div class="sb2-13">
+    <ul class="collapsible" data-collapsible="accordion">
+        <li>
+            <a href="@Url.Action("Index", "Administrator")" class="menu-active"><i class="fa fa-bar-chart" aria-hidden="true"></i>Trang chủ</a>
+        </li>
+        @if (rolesadmin)
+        {       
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header menu-active @ViewBag.chidoan"><i class="fa fa-picture-o" aria-hidden="true"></i>Chi đoàn</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "ChiDoan")">Danh sách</a></li>
+                        <li><a href="@Url.Action("Create", "ChiDoan")">Thêm mới</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header menu-active @ViewBag.phandoan"><i class="fa fa-picture-o" aria-hidden="true"></i>Phân đoàn</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "PhanDoan")">Danh sách</a></li>
+                        <li><a href="@Url.Action("Create", "PhanDoan")">Thêm mới</a></li>
+                    </ul>
+                </div>
+            </li>
+      
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.doanvien menu-@ViewBag.doanvien menu-active"><i class="fa fa-list-ul" aria-hidden="true"></i>Đoàn viên</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "DoanVien")">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Create", "DoanVien")">Thêm mới</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("TreeList", "DoanVien")">Danh sách theo chi đoàn</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+     
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header menu-active @ViewBag.nhiemky"><i class="fa fa-picture-o" aria-hidden="true"></i>Nhiệm kỳ</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li><a href="@Url.Action("Index", "NhiemKy")">Danh sách</a></li>
+                        <li><a href="@Url.Action("Create", "NhiemKy")">Thêm mới</a></li>
+                    </ul>
+                </div>
+            </li>
+        }
+        @if (!rolesadmin)
+        {
+          
+@*<li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.tintuc menu-@ViewBag.tintuc menu-active"><i class="fa fa-calendar-o" aria-hidden="true"></i>Tin tức</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li>
+                            <a href="/New/Index">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="/New/DeleteAuthorise">Danh sách duyệt xóa</a>
+                        </li>
+                        @if (roloesinputter)
+                        {
+                            <li>
+                                <a href="@Url.Action("Create", "New")">Thêm mới</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </li>*@
+            
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.doanvien menu-@ViewBag.doanvien menu-active"><i class="fa fa-list-ul" aria-hidden="true"></i>Đoàn viên</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "DoanVienChiDoan")">Danh sách</a>
+                        </li>
+                        @if (roloesinputter)
+                        {
+                            <li>
+                                <a href="@Url.Action("Create", "DoanVienChiDoan")">Thêm mới</a>
+                            </li>
+                        }
+                        <li>
+                            <a href="@Url.Action("TreeList", "DoanVienChiDoan")">Danh sách theo chi đoàn</a>
+                        </li>
+                        @if (!rolesview)
+                        {
+                            <li>
+                                <a href="/DoanVienChiDoan/DeleteAuthorise">Danh sách duyệt xóa</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+            
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.hoatdong menu-@ViewBag.hoatdong menu-active"><i class="fa fa-usd" aria-hidden="true"></i>Hoạt động đoàn viên</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        @if (rolesview)
+                        {
+                            <li>
+                                <a href="@Url.Action("ListHoatDong", "Home")">Danh sách</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "HoatDong")">Danh sách</a>
+                            </li>
+                        }
+                        @if (!rolesview)
+                        {
+                            <li>
+                                <a href="/HoatDong/DeleteAuthorise">Danh sách duyệt xóa</a>
+                            </li>
+                        }
+                        @if (roloesinputter)
+                        {
+                            <li>
+                                <a href="@Url.Action("Create", "HoatDong")">Thêm mới</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+
+@*<li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.thamgia menu-@ViewBag.thamgia menu-active"><i class="fa fa-tags" aria-hidden="true"></i>Danh sách tham gia</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "ThamGia")">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Create", "ThamGia")">Thêm thành viên</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>*@
+
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.congvan menu-@ViewBag.congvan menu-active"><i class="fa fa-rss" aria-hidden="true"></i>Công văn</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        @if (rolesview)
+                        {
+                            <li>
+                                <a href="@Url.Action("ListCongVan", "Home")">Danh sách</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "CongVan")">Danh sách</a>
+                            </li>
+                        }
+
+                        @if (roloesinputter)
+                        {
+                            <li>
+                                <a href="@Url.Action("Create", "CongVan")">Thêm mới</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+                        if (!rolesview)
+                        {
+            <li>
+                <a href="javascript:void(0)" class="collapsible-header @ViewBag.sendmail menu-@ViewBag.sendmail menu-active"><i class="fa fa-rss" aria-hidden="true"></i>Gửi mail</a>
+                <div class="collapsible-body left-sub-menu">
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "SendMail")">Danh sách</a>
+                        </li>
+                        @if (roloesinputter)
+                        {                
+                            <li>
+                                <a href="@Url.Action("Create", "SendMail")">Thêm mới</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </li>
+                        }
+        }
+@*   @if (rolesadmin)
+        {          
+           <li>
+            <a href="javascript:void(0)" class="collapsible-header @ViewBag.phanquyen menu-@ViewBag.phanquyen menu-active"><i class="fa fa-rss" aria-hidden="true"></i>Phân quyền</a>
+            <div class="collapsible-body left-sub-menu">
+                <ul>
+                    <li>
+                        <a href="@Url.Action("UsersWithRoles", "ManageUsers")">Danh sách người dùng</a>
+                    </li>
+                   
+                    <li>
+                        <a href="@Url.Action("Create", "ManageUsers")">Thêm quyền người dùng</a>
+                    </li>
+                </ul>
+            </div>
+        </li>              
+        }*@
+
+        <li><a class="menu-active" href="@Url.Content("/Account/LogOff")"><i class="fa fa-sign-in" aria-hidden="true"></i>Đăng xuất</a></li>
+    </ul>
+</div>
+</div>
+
+

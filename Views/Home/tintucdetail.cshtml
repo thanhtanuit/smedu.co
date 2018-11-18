@@ -1,0 +1,21 @@
+﻿@model Bidc_Union_Management.Models.New
+
+@{    
+    Layout = "~/Views/Shared/Trangchu.cshtml";
+}
+
+<div id="content">
+    <div class="content_module">
+        <div class="d-flex bd-highlight wrap_title mt-4">
+            <h5 class="bd-highlight title_module m-0">Tin tức</h5>
+            <p class="bd-highlight font-italic ml-auto text-right mb-0 pt-2 view_more"><a href="/home/tintuc">Xem thêm</a> <i class="fas fa-angle-double-right" style="color: #737373;"></i></p>
+        </div>
+        <div class="row mt-2">
+            <div class="col-sm-12">
+                <h5 class="mt-0 media_title">@Model.Name</h5>
+                @Html.Raw(Model.ContentNew)
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end #content -->

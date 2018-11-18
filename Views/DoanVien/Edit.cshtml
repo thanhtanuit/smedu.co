@@ -1,0 +1,167 @@
+﻿@model Bidc_Union_Management.Models.DoanVien
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li class="active-bre"><a href="#">Đoàn viên</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Sửa đoàn viên</h4>
+                    </div>
+                    <div class="tab-inn">                        
+                        @using (Html.BeginForm("Edit", "DoanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.CreateDate)
+                            @Html.HiddenFor(model => model.UserName)
+                            @Html.HiddenFor(model => model.Branch)
+                            @Html.HiddenFor(model => model.Avatar)
+                            <div style="color: red; margin-top: 5px;">
+                                @ViewBag.error
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-6">
+                                        <strong>Tên đăng nhập:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Họ Tên :<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-6">
+                                        <strong>Email:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Ngày sinh:<br />
+                                        </strong>
+                                        @{
+                            DateTime ngaysinh = (DateTime)Model.Birthday;
+                                         }
+                                        @Html.TextBoxFor(m => m.Birthday,
+                                            new { @Value = ngaysinh.ToString("MM/dd/yyyy"), @class = "datepicker" })
+
+
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-6">
+                                        <strong>Quê quán:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>  
+                                    <div class="col-md-6">
+                                        <strong>Mật khẩu:<br />
+                                        </strong>
+                                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>                               
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-4">
+                                        <strong>Chức vụ:<br />
+                                        </strong>
+                                        @Html.DropDownList("chucvuid", new SelectList(ViewBag.quyenhans, "Value", "Text"))
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Chi đoàn:<br />
+                                        </strong>                                        
+                                         @Html.DropDownList("chidoanid", new SelectList(ViewBag.listchidoans, "Value", "Text"))
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong>Phân đoàn:<br />
+                                        </strong>
+                                        @Html.DropDownList("phandoanid", new SelectList(ViewBag.listphandoans, "Value", "Text"))
+                                    </div>
+                                </div>
+                                <div class="input-field col s12" style="clear:both;padding-top:10px;">
+                                        <p style="padding-left:20px;">Ảnh cá nhân</p>
+                                        <div class="col-sm-9">
+                                            <img width="200" src="@Url.Content("/FileUpload")/@Html.DisplayFor(model => model.Avatar)"><br /><br />
+                                            <input type="file" name="images" id="images" />
+                                        </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-12">
+                                        <strong>Phân quyền:<br />
+                                        </strong>
+                                        <input type="text" name="fname" id="fname" style="display:none;">
+                                         <input class="chk" name="admin" type="checkbox" id="admin" value="admin" @ViewBag.roleadmin />
+                                         <label style="margin-top:-10px;" for="admin">admin</label>
+                                          &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="authoriser" type="checkbox" id="authoriser" value="authoriser" @ViewBag.roleauthorise />
+                                         <label style="margin-top:-10px" for="authoriser">authoriser</label>
+                                         &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="inputter" type="checkbox" id="inputter" value="inputter" @ViewBag.roleinput />
+                                         <label style="margin-top:-10px" for="inputter">inputter</label>
+                                         &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="viewer" type="checkbox" id="viewer" value="viewer" @ViewBag.roleview />
+                                         <label style="margin-top:-10px" for="viewer">viewer</label>
+                                    </div>                               
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                       <input type="submit" value="Lưu" class="btn-large" id="btsubmit" style="display:none !important">
+                                       <input type="button" value="Submit" id="buttonClass" class="btn-large"> 
+                                    </div>
+                                </div>
+                            </div>                                      
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        /* Get the checkboxes values based on the class attached to each check box */
+        $("#Birthday").datepicker();
+        $("#buttonClass").click(function () {
+            getValueUsingClass();
+        });
+    });
+
+    function getValueUsingClass() {
+
+        /* declare an checkbox array */
+        var chkArray = [];
+
+        /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+        $(".chk:checked").each(function () {
+            chkArray.push($(this).val());
+        });
+
+        /* we join the array separated by the comma */
+        var selected;
+        selected = chkArray.join(',');
+
+        /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+        $("#fname").val(selected);
+        $("#btsubmit").click();
+    }
+
+</script>
+
+

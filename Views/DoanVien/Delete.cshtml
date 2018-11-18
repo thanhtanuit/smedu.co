@@ -1,0 +1,123 @@
+﻿@model Bidc_Union_Management.Models.DoanvienModels
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Đoàn viên</a>
+            </li>
+            <li class="active-bre"><a href="#">Xóa</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Xóa đoàn viên</h4>
+                    </div>
+                    <div class="tab-inn">                        
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Tên đăng nhập:</strong><br />
+                                        @Model.UserName
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Họ tên:</strong><br />
+                                        @Model.FullName
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Email:</strong><br />
+                                        @Model.Email
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ngày sinh:</strong><br />
+                                        @Model.Birthday
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Chức vụ:</strong><br />
+                                        @Model.Chucvu
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Chi đoàn:</strong><br />
+                                        @Model.Chidoan
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Phân đoàn:</strong><br />
+                                        @Model.Phandoan
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ảnh đại diện:</strong><br /><br />
+                                        <img width="200" src="@Url.Content("/FileUpload")/@Html.DisplayFor(model => model.Avatar)">
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Quê quán:</strong><br />
+                                        @Model.Country
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ngày tạo:</strong><br />
+                                        @Model.CreateDate
+                                    </div>
+                                </div>
+                                 <div class="input-field col s12">
+                                    <div class="col-md-12">
+                                        <strong>Phân quyền:<br />
+                                        </strong>
+                                        <input type="text" name="fname" id="fname" style="display:none;">
+                                         <input class="chk" name="admin" type="checkbox" id="admin" value="admin" @ViewBag.roleadmin />
+                                         <label style="margin-top:-10px;" for="admin">admin</label>
+                                          &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="authoriser" type="checkbox" id="authoriser" value="authoriser" @ViewBag.roleauthorise />
+                                         <label style="margin-top:-10px" for="authoriser">authoriser</label>
+                                         &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="inputter" type="checkbox" id="inputter" value="inputter" @ViewBag.roleinput />
+                                         <label style="margin-top:-10px" for="inputter">inputter</label>
+                                         &nbsp;&nbsp;&nbsp;
+                                         <input class="chk" name="viewer" type="checkbox" id="viewer" value="viewer" @ViewBag.roleview />
+                                         <label style="margin-top:-10px" for="viewer">viewer</label>
+                                    </div>                               
+                                </div>
+
+                                @using (Html.BeginForm("Delete", "DoanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()             
+                                    @Html.ValidationSummary()
+
+                                    <div class="input-field col s12">
+                                        <div class="col-md-10">
+                                            <input type="submit" value="Xóa" class="btn-large" />
+                                            |
+                                            <a href="Javascript:void(0)" class="btn-large" onclick="window.history.back()">Trở lại</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

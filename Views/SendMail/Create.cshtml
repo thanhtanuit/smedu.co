@@ -1,0 +1,163 @@
+﻿@model Bidc_Union_Management.Models.SendMail
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li class="active-bre"><a href="#">Gửi mail</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Gửi mail</h4>
+                    </div>
+                    <div class="tab-inn">
+                        <div class="input-field col s12">
+                            <div class="col-md-10">
+                                <span style="color: red">@ViewBag.error</span>
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("Create", "SendMail", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Chủ đề:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Nội dung:<br />
+                                        </strong>
+                                        @Html.TextAreaFor(model => model.Contents)
+                                        @Html.ValidationMessageFor(model => model.Contents)
+                                    </div>
+                                </div>
+
+                                <div class="input-field col s12" style="clear: both; padding-top: 10px;">
+                                    <p style="padding-left: 20px;">File đính kèm</p>
+                                    <div class="col-sm-9">
+                                        <input type="file" name="file" id="files" />
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <p>
+                                            <input name="sendmail" type="checkbox" id="sendmail" value="1" />
+                                            <label for="sendmail">Gửi tất cả</label>
+                                        </p>
+                                        <p>
+                                            <input name="sendsomemail" type="checkbox" id="sendsomemail" value="2" />
+                                            <label for="sendsomemail">Gửi một số người</label>
+                                            <input type="text" name="fname" id="fname" style="display: none;">
+                                            <table class="table table-bordered" id="tbl_dsemail" style="display: none; margin-top: 10px">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Chọn</th>
+                                                        <th>Email</th>
+                                                        <th>Tên đăng nhập</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in ViewBag.dsdoanvien)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                <input class="chk" name="@item.Email" type="checkbox" id="@item.Email" value="@item.Email" />
+                                                                <label style="margin-top:-10px" for="@item.Email"></label>
+                                                            </td>
+                                                            <td>@item.Email</td>
+                                                            <td>@item.UserName</td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <input type="submit" value="Lưu" class="btn-large" id="btsubmit" style="display:none!important">
+                                        <input type="button" value="Lưu" id="buttonClass" class="btn-large">
+                                    </div>
+                                </div>
+                            </div>                                      
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        /* Get the checkboxes values based on the class attached to each check box */
+        $("#buttonClass").click(function () {
+            var Subject = $("#Subject").val();
+            if (Subject=="") {
+                alert("Bạn chưa nhập chủ đề");
+                return false;
+            }
+
+            var Contents = $("#Contents").val();
+            if (Contents=="") {
+                alert("Bạn chưa nhập nội dung");
+                return false;
+            }
+            getValueUsingClass();
+        });
+
+        $('#sendsomemail').change(function () {
+            // this will contain a reference to the checkbox   
+            if (this.checked) {
+                // the checkbox is now checked 
+                $("#tbl_dsemail").show();
+            } else {
+                // the checkbox is now no longer checked
+                $("#tbl_dsemail").hide();
+            }
+        });
+    });
+
+    function getValueUsingClass() {
+        debugger;
+        /* declare an checkbox array */
+        var chkArray = [];
+
+        /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+        $(".chk:checked").each(function () {
+            chkArray.push($(this).val());
+        });
+
+        /* we join the array separated by the comma */
+        
+        selected = chkArray.join(',');
+        var selected;
+
+        /* check if there is selected checkboxes, by default the length is 1 as it contains one single comma */
+        $("#fname").val(selected);
+        $("#btsubmit").click();
+    }
+
+</script>
+
+<style>
+    #Contents
+    {
+        padding:10px;
+        min-height:200px;
+    }
+</style>

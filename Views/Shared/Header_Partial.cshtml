@@ -1,0 +1,43 @@
+﻿<script type="text/javascript" language="javascript" src="~/ContentAdmin/js/jquery-2.1.0.min.js"></script>
+
+<!--== MAIN CONTRAINER ==-->
+<div class="container-fluid sb1">
+    <div class="row">
+        <!--== LOGO ==-->
+        <div class="col-md-2 col-sm-3 col-xs-6 sb1-1">
+            <a href="#" class="btn-close-menu"><i class="fa fa-times" aria-hidden="true"></i></a>
+            <a href="#" class="atab-menu"><i class="fa fa-bars tab-menu" aria-hidden="true"></i></a>
+            <a href="@Url.Action("Index","Administrator")" class="logo"><img src="~/ContentAdmin/images/logo.png" alt="" /></a>
+</div>
+        <!--== SEARCH ==-->
+        <div class="col-md-6 col-sm-6 mob-hide">
+            <div class="title-top-admin" style="width:100%; margin:auto; text-align:center; color:#ffffff; padding-top: 21px;font-size: 20px;"><strong>NGÂN HÀNG ĐẦU TƯ VÀ PHÁT TRIỂN CAMPUCHIA</strong></div>
+            @*<form class="app-search">
+                <input type="text" placeholder="Search..." class="form-control">
+                <a href=""><i class="fa fa-search"></i></a>
+            </form>*@
+        </div>
+        <!--== NOTIFICATION ==-->
+        <div class="col-md-2 tab-hide" style="float:left; ">
+            
+            <div class="top-not-cen" style="float:right;  padding-top:21px; padding-left:10px;">
+                <button id="btn" style="border:none; background:none;"><img width="40" src="~/ContentAdmin/images/anh.png" alt=""></button>
+            </div>
+            <div class="top-not-cen" style="float:right; padding-top:21px">
+                <a href="@Url.Action("Index","Administrator")"><img width="40" src="~/ContentAdmin/images/vn.png" alt="" /></a>
+            </div>
+        </div>
+        <!--== MY ACCCOUNT ==-->
+        <div class="col-md-2 col-sm-3 col-xs-6">
+
+            <!-- Dropdown Trigger -->
+            <a class='waves-effect dropdown-button top-user-pro' href='#' data-activates='top-menu'><img src="~/ContentAdmin/images/user/6.png" alt="" />@User.Identity.Name <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+
+            <!-- Dropdown Structure -->
+            <ul id='top-menu' class='dropdown-content top-menu-sty'>              
+            </ul>
+        </div>
+    </div>
+</div>
+

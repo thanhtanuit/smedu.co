@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Bidc_Union_Management.Models.New>
+@using Bidc_Union_Management.Constant
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li class="active-bre"><a href="#">Tin tức</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Danh sách duyệt xóa</h4>
+                    </div>
+                    <div class="tab-inn">
+                        <div class="table-responsive table-desi">
+                            @functions
+                                        {
+                                public string GenerateLinks(dynamic item)
+                                {
+                                    string result = string.Empty;
+
+                                    result += Html.ActionLink(" Khôi phục ", "Restore", "New",
+                                                               new
+                                                               {
+                                                                   id = item.Id
+                                                               },
+                                                               new { @title = "Khôi phục" }
+                                                               ).ToString();
+
+                                    if (Roles.IsUserInRole("Authoriser"))
+                                    {                                                      
+                                        result += Html.ActionLink("Xóa ", "Delete", "New",
+                                                                new
+                                                                {
+                                                                    id = item.Id
+                                                                },
+                                                                new { @title = "Xóa" }
+                                                                ).ToString();
+                                    }
+                                    return result;
+                                }
+                                }
+
+                            @{ var grid = new WebGrid(Model, rowsPerPage: 10, fieldNamePrefix: "sortSBs", pageFieldName: "pageSBs");
+                                @grid.GetHtml(
+                                        tableStyle: "webgrid table table-hover",
+                                        headerStyle: "webgrid-header",
+                                        footerStyle: "webgrid-footer",
+                                        alternatingRowStyle: "webgrid-alternating-row",
+                                        selectedRowStyle: "webgrid-selected-row",
+                                        rowStyle: "webgrid-row-style",
+                                        mode: WebGridPagerModes.All,
+                                            firstText: "<<",
+                                            lastText: ">>",
+                                        columns: grid.Columns(
+                                                        grid.Column(columnName: "Name", header: "Tên"),                                                        
+                                                        grid.Column("Trạng thái",format: (item) =>
+                                                        {
+                                                            if (item.Status == 1)
+                                                            {
+                                                                return Html.Raw("Chưa duyệt");
+                                                            }
+                                                            else if (item.Status == 2)
+                                                            {
+                                                                return Html.Raw("Đã duyệt");
+                                                            }
+                                                            else
+                                                            {
+                                                                return Html.Raw("Chờ duyệt xóa");
+                                                            }
+                                                        }, style: "firstColumn",canSort:true), 
+                                                        grid.Column(
+                                                            "CreateDate", 
+                                                            "Ngày Tạo",
+                                                            format: (item) => string.Format("{0:dd/MM/yyyy}", item.CreateDate)
+                                                        ),
+                                                        grid.Column(columnName: null, header: "Lựa Chọn",
+                                                        format: (item) => new HtmlString(@GenerateLinks(item))
+                                                    )
+                                                    )
+                                      )
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

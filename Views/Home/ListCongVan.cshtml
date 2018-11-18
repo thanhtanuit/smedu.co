@@ -1,0 +1,45 @@
+﻿@using PagedList.Mvc ;
+@model  PagedList.IPagedList<Bidc_Union_Management.Models.CongVan>  
+
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Trang chủ</a>
+            </li>
+            <li class="active-bre"><a href="Javascript:void(0)">Công văn</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title" style="margin-bottom: 10px;">
+                        <h4>Công văn</h4>
+                    </div>
+                    <div style="margin: 5px;margin-left:25px;">
+                        <ul class="list-group">
+                            @foreach (var item in Model)
+                            {
+                                var dt = (DateTime)item.CreateDate;
+                                <li class="list-group-item">
+                                    <img style="position: relative; margin-top: -5px;" width="20" height="20" src="/Images/icon-list.png" />
+                                    <a  target="_blank" href="/FileUpload/CongVan/@item.Link">@item.Name (@dt.ToString("dd/MM/yyyy"))</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div id="container" style="margin-left: 20px">    
+                    <p></p>    
+                    <p></p>    
+                    <div class="pagination" style="margin-left: 400px">    
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)    
+                        / @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("ListCongVan", new { page }))    
+                    </div>                        
+                </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

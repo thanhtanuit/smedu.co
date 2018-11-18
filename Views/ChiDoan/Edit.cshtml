@@ -1,0 +1,58 @@
+﻿@model Bidc_Union_Management.Models.ChiDoan
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li class="active-bre"><a href="#">Chi đoàn</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Sửa chi đoàn</h4>
+                    </div>
+                    <div class="tab-inn">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model=>model.CreateDate)
+                            
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Tên:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <strong>Ký hiệu:<br />
+                                        </strong>
+                                        @Html.EditorFor(model => model.Branch, new { htmlAttributes = new { @class = "validate" } })
+                                    </div>
+                                </div>
+                                <div class="input-field col s12">
+                                    <div class="col-md-10">
+                                        <input type="submit" value="Lưu" class="btn-large">
+                                    </div>
+                                </div>
+                            </div>   
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

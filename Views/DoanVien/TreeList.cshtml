@@ -1,0 +1,101 @@
+﻿@using Bidc_Union_Management.Models;
+@{
+    ViewBag.Title = "TreeList";
+}
+
+<div class="sb2-2">
+    <div class="sb2-2-2">
+        <ul>
+            <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+            </li>
+            <li class="active-bre"><a href="#">Đoàn viên</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sb2-2-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-inn-sp">
+                    <div class="inn-title">
+                        <h4>Danh sách đoàn viên theo chi đoàn</h4>
+                    </div>
+                    <div class="tab-inn">
+                        <div class="treeview" id="treeview10" style="margin-top: 10px;">
+                            <ul class="list-group">
+                                @foreach (var item in ViewBag.chidoans)
+                                {                                  
+                                    <li class="list-group-item node-treeview10 chidoan"><a href="Javascript:void(0)">@item.Name</a>                               
+                                        @foreach (var pd in item.dsphandoan)
+                                        {                            
+                                            <div class="phandoan">
+                                                <a href="Javascript:void(0)">@pd.Name</a>
+                                                <div class="tbl_children">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Tên ĐN</th>
+                                                                <th>Họ tên</th>
+                                                                <th>Email</th>
+                                                                <th>Chức vụ</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                      
+                                                            @foreach (var dv in pd.dsdoanvien)
+                                                            {                                                          
+                                                                <tr>
+                                                                    <td style="width:20%">@dv.UserName</td>
+                                                                    <td style="width:30%">@dv.FullName</td>
+                                                                    <td style="width:30%">@dv.Email</td>
+                                                                    <td style="width:20%">@dv.Chucvu</td>
+                                                                </tr>  
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> 
+                                        }
+                                    </li> 
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .phandoan {
+        margin-top: 10px;
+        margin-left: 15px;
+        display: none;
+    }
+
+    .tbl_children {
+        margin-top: 10px;
+        margin-left: 15px;
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $(".chidoan").click(function () {
+            $($(this).children('.phandoan')).show();
+        });
+
+        $(".phandoan").click(function () {
+            //if ($($(this).children('.tbl_children')).is(':visible')) {
+            //    $($(this).children('.tbl_children')).hide();
+            //} else {
+            //    $($(this).children('.tbl_children')).show();
+            //}
+            $($(this).children('.tbl_children')).show();
+        });
+
+    });
+    
+</script>
